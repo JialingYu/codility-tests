@@ -9,11 +9,11 @@ When the length of iteration is unknown and we iterate as long as a condition is
 **Example**: print the Fibonacci number as long as it is smaller than 100.
 
 ```python
-a=0
-b=1
-while a<100:
+a = 0
+b = 1
+while a < 100:
     print(a)
-    c=a+b
-    a=b
-    b=c
+    c = a + b
+    a = b
+    b = c
 ```
