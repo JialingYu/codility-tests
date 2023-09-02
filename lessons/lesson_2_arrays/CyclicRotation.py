@@ -38,11 +38,15 @@ each element of array A is an integer within the range [−1,000..1,000].
 """
 
 def solution(A, K):
+    """
+    A is a list, K is an integer, input a list A and return the K times rotated list A 
+    """
     if len(A) == 0:
         return A
     else:
-       K = K % len(A)
-       rotated = [0] * len(A)
-       rotated[K:] = A[:len(A)-K]
-       rotated[:K] = A[len(A)-K:]
-       return rotated
+        # when K is larger than len(A)
+        # rotate K times is the same with rotate K mod len(A) times
+        K = K % len(A)
+        tail = A[:len(A)-K]
+        head = A[len(A)-K:]
+        return head + tail
