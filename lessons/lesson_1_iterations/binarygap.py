@@ -17,34 +17,27 @@ Write an efficient algorithm for the following assumptions:
 N is an integer within the range [1..2,147,483,647].
 """
 def solution(N):
-  """
-  input an integer N, convert it into a binary string and return the length of the largest zeros string between 1 and 1
-  """
+    """
+    input an integer N, convert it into a binary string and return the length of the largest string of zeros between 1 and 1
+    """
     # get the binary expression 
     # start from the third character to get rid of '0b'
     binary = bin(N)[2:]
-    # set a variable to store the larrgest gap
+    # set a variable to store the largest gap
     largest_gap =0
     # set a variable to count the gap
     zero_counter = 0
-    # set a variable to indicate the current character is 1
-    char_is_one = False
     # loop over the binary expression
     for char in binary:
         # if the char is 1
         if char == '1':
-            # indicate the current character is 1
-            #store the current state for next iteration
-            char_is_one = True
             # compare the largest gap and the current gap
             # store the larger one
-            if largest_gap < zero_counter:
-                largest_gap = zero_counter
+            largest_gap = max(largest_gap, zero_counter)
             # reset the counter to zero
             zero_counter = 0
         # if the current character is zero 
-        # and the previous char is one
-        elif char_is_one:
+        else:
             # start the counting
             # keep counting until the char is 1
             zero_counter += 1
