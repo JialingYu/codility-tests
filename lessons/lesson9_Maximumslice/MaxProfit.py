@@ -1,5 +1,10 @@
 def solution(A):
-    # Implement your solution here
+    #main idea:
+    #iterate the array once, initialize the current max and min value to be the first element of the array
+    #initialize max_prof to store the max profit
+    #if the second element is bigger than the current max, update the max profit 
+    #if the second element is smaller then the current min, update the current min and current max to be the second element
+    #for other situations, do nothing
     l=len(A)
     if l < 2:
         return 0
