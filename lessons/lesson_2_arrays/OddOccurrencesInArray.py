@@ -1,41 +1,58 @@
-"""
-Task description
-A non-empty array A consisting of N integers is given. The array contains an odd number of elements, and each element of the array can be paired with another element that has the same value, except for one element that is left unpaired.
-
-For example, in array A such that:
-
-  A[0] = 9  A[1] = 3  A[2] = 9
-  A[3] = 3  A[4] = 9  A[5] = 7
-  A[6] = 9
-the elements at indexes 0 and 2 have value 9,
-the elements at indexes 1 and 3 have value 3,
-the elements at indexes 4 and 6 have value 9,
-the element at index 5 has value 7 and is unpaired.
-Write a function:
-
-def solution(A)
-
-that, given an array A consisting of N integers fulfilling the above conditions, returns the value of the unpaired element.
-
-For example, given array A such that:
-
-  A[0] = 9  A[1] = 3  A[2] = 9
-  A[3] = 3  A[4] = 9  A[5] = 7
-  A[6] = 9
-the function should return 7, as explained in the example above.
-
-Write an efficient algorithm for the following assumptions:
-
-N is an odd integer within the range [1..1,000,000];
-each element of array A is an integer within the range [1..1,000,000,000];
-all but one of the values in A occur an even number of times.
-"""
+#method 1:
+#in python, set is implemented as a hash table as dictionary, and each key is mapped to a hash value by a hash map, 
+#and the value is stored at that hash value position. Searching, inserting, and deleting is very efficient for hash table, which has average O(1)
+#time complexity; but in worse case when many hash collisions(when the hash map generate the same hash value for different keys)
+#occurs, complexity can be O(N)
 
 def solution(A):
     s = set()
     for i in A:
+      #searching in a set has O(1) time complexity
         if i in s:
+          #deleting in a set has O(1) time complexity
+          #set.remove(item), set.discard(item) will remove item inplace and return none
+          #set.remove(item) will raise an error when the item is not in the set, but set.discard() will not
             s.remove(i)
         else:
             s.add(i)
+          #set is unordered, set.pop() will return any element of the set
     return s.pop()
+
+#method 2:
+def solution(A):
+    if len(A) == 1:
+        return A[0]
+    A.sort()
+  #use c to count the number of times an element appeared
+    c=1
+    for i in range(1,len(A)):
+      #if the current element is not equal to the previous element and the previous element has appeared odd number of times
+      #return the previous element
+        if A[i]!=A[i-1] and c%2==1:
+            return A[i-1]
+      #if the current element is not equal to the previous element and the previous element has appeared even number of times
+      #reset counting to 1 to count the appearence of current element
+        elif A[i]!=A[i-1] and c%2==0:
+            c=1
+      #if the current element is equal to the previous element, continue the counting
+        else:
+            c+=1
+    return A[-1]
+  
+#method 3,O(N) or O(N*log(N))
+def solution(A):
+    if len(A)==1:
+        return A[0]
+    A.sort()
+    i=1
+    while i <len(A):
+      #if the current element is equal to the previous element
+      #increment the index by 2
+        if A[i]==A[i-1]:
+            i+=2
+      #otherwise return the previous element
+        else:
+            return A[i-1]
+    #if the while loop has ended and the function do not return anything
+    #this means the last element is the unpaired element and we should return it
+    return A[-1]
