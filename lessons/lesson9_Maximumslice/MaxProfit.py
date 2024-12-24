@@ -1,3 +1,4 @@
+#method 1:
 def solution(A):
     #main idea:
     #iterate the array once, initialize the current max and min value to be the first element of the array
@@ -27,3 +28,15 @@ def solution(A):
     if max_prof <= 0:
         return 0
     return max_prof
+
+#method 2:O(N)
+def solution(A):
+    #for each day, compute the maximum possible profit when the transaction end at that day
+    #the maximum profit during the whole period is the maximum of the maximal profit ends at each day
+    max_profit=max_end=0
+    for end in range(1,len(A)):
+        #the maximum profit when transaction end at day i is the sum of maximum profit when transaction end at day i-1 and A[i]-A[i-1]
+        max_end=max(0,max_end+(A[end]-A[end-1]))
+        #the maximum profit during the whole period is the maximum value among all the max_end
+        max_profit=max(0,max_end)
+    return max_profit
