@@ -31,12 +31,18 @@ def solution(A):
 
 #method 2:O(N)
 def solution(A):
-    #for each day, compute the maximum possible profit when the transaction end at that day
-    #the maximum profit during the whole period is the maximum of the maximal profit ends at each day
-    max_profit=max_end=0
-    for end in range(1,len(A)):
-        #the maximum profit when transaction end at day i is the sum of maximum profit when transaction end at day i-1 and A[i]-A[i-1]
-        max_end=max(0,max_end+(A[end]-A[end-1]))
-        #the maximum profit during the whole period is the maximum value among all the max_end
-        max_profit=max(0,max_end)
-    return max_profit
+    if len(A)<=1:
+        return 0
+    #main idea:
+    #the maximal profit of the whole period is the maximum among the maximal profit end at each day
+    #to calculate the maximal profit end at day i, use the relation:
+    #max_end_i=max(max_end_(i-1)+(A[i]-A[i-1]),A[i]-A[i-1])
+    #i.e., if the maximal profit end at day i-1 is positive, the maximal profit end at day i would be the sum of maximal profit end at day i-1 and the profit of buying the stock at day i-1 and selling it at day i, otherwise it would be A[i]-A[i-1]
+    max_profit=max_end=A[1]-A[0]
+    for i in range(2,len(A)):
+        max_end=max(max_end+(A[i]-A[i-1]),A[i]-A[i-1])
+        max_profit=max(max_profit,max_end)
+    if max_profit >0:
+        return max_profit
+    else:
+        return 0
