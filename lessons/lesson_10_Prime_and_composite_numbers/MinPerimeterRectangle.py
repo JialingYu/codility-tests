@@ -1,11 +1,15 @@
+#O(sqrt(N))
 def solution(N):
-    x=1
-    current=N
-    min_pre=N+100
-    while x < current:
-        if N%x==0:
-            pre=N/x + x
-            min_pre=min(pre,min_pre)
-        current=N/x
-        x+=1
-    return int(2*min_pre)
+    #the length of sides of the rectangle should be a divisor of N
+    #the length of a smaller side should be <= sqrt(N)
+    #iterate through all the possible length to find the minimal perimeter
+    #initialize the minimal perimeter
+    m=2*(1+N)
+    i=1
+    while i*i <=N:
+        if N%i==0:
+            peri=2*(i+N/i)
+            m=min(m,peri)
+        i+=1
+    return int(m)
+
